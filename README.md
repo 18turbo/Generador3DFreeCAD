@@ -11,5 +11,5 @@ Funcionamiento:
 Crea las vistas adecuadas con bocetos (sketch) para la generación de un objeto 3D. Pueden ser 2 o 3 vistas, que deben corresponderse a la Planta, Alzado y/o Lateral de la pieza. Los salientes no los interpreta por el momento, pero los agujeros sí. Un boceto puede contener varios contornos, siempre y cuando no se crucen o sean vaciados (agujeros).
 
 Notas:
-Si una vista en Planta se asigna a un frontal, aunque hace la operación, el resultado no será correcto. Esto, por el momento no está depurado.
+Si una vista se asigna de forma equivocada (por ejemplo, una vista en Planta se asigna a un frontal), aunque hace la operación, el resultado no será correcto. Esto, por el momento no está depurado.
 Por el momento, esto es una versión BETA. No usar sin la pertinente copia de seguridad de los modelos a realizar.
