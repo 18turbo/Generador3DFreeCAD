@@ -1,0 +1,207 @@
+import FreeCAD,FreeCADGui,Part
+
+from PySide import QtCore, QtGui
+from FreeCAD import Base
+
+# Autor:			18Turbo
+# Fecha:		05-08-2022
+# Versión:		0.0.10 BETA
+#	
+# Funcionalidad:	Genera una pieza 3D a partir de 2 o 3 sketch, cada uno en una vista distinta (planta, frontal o lateral)
+#
+# Descripción:	
+#
+#
+# Notas de versiones:
+# v.0.0.9:		Cambio de interfaz y corrección de errores. Beta funcional.
+# v.0.0.8:		Corrección de errores
+# v.0.0.7:		Corrección de errores
+# v.0.0.6:		Primera versión BETA
+# v.0.0.5 ALFA:	Genera la pieza 3D con 3 vistas
+# v.0.0.4 ALFA:	Arregla la selección en las vistas en la pestaña Task (Tarea)
+#
+#
+# BetaTester: Rafael García Rodríguez
+# BetaTester: Rafael Martínez (18Turbo)
+ 
+
+rutaMacro = FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Macro")     
+rutaUI = rutaMacro.GetString("MacroPath","") + "/generador3D/generador3D.ui"
+rutaUI = rutaUI.replace("\\","/")
+
+class BoxTaskPanel:
+   def __init__(self):
+       self.form = FreeCADGui.PySideUic.loadUi(rutaUI)
+
+       self.form.setWindowTitle("Generador 3D")
+       self.form.tabWidget.addTab(self.form.tab,"Vistas Principales")
+       objetos = FreeCAD.ActiveDocument.Objects
+       lista = []
+       self.nombrePlanta = ""
+       self.nombreFrontal = ""
+       self.nombreLateral = ""
+       self.frontal = False
+       self.lateral = False
+       self.planta = False
+       self.vistasActivas = 0
+
+       for buscandoBocetos in objetos:
+           if buscandoBocetos.Name.find('Sketch') > -1:
+               lista.append(buscandoBocetos.Label)
+
+       for i in lista:
+           #item = self.form.listView(i)
+           self.form.listWidgetFrontal.addItem(i)
+           self.form.listWidgetLateral.addItem(i)
+           self.form.listWidgetPlanta.addItem(i)
+
+
+       self.form.listWidgetFrontal.itemSelectionChanged.connect(self.cambiaSeleccionFrontal)
+       self.form.listWidgetLateral.itemSelectionChanged.connect(self.cambiaSeleccionLateral)
+       self.form.listWidgetPlanta.itemSelectionChanged.connect(self.cambiaSeleccionPlanta)
+
+   def cambiaSeleccionFrontal(self):
+       self.nombreFrontal = str(self.form.listWidgetFrontal.selectedItems()[0].text())
+       if not (self.frontal):
+           self.frontal = True
+           self.vistasActivas = self.vistasActivas + 1
+
+   def cambiaSeleccionLateral(self):
+       self.nombreLateral = str(self.form.listWidgetLateral.selectedItems()[0].text())
+       if not (self.lateral):
+           self.lateral = True
+           self.vistasActivas = self.vistasActivas + 1
+
+   def cambiaSeleccionPlanta(self):
+       self.nombrePlanta = str(self.form.listWidgetPlanta.selectedItems()[0].text())
+       if not (self.planta):
+           self.planta = True
+           self.vistasActivas = self.vistasActivas + 1
+
+   def accept(self):
+
+       #Comprobar que no existe ya una extrusión con este nombre
+       numeroCoincidencias = 0
+       encontradoCoincidencia = False
+       cadenaAdicional = ""
+       objetos = FreeCAD.ActiveDocument.Objects
+       for objeto in objetos:
+           if ((objeto.Name.find('ExtrPlanta18Turbo') > -1) or 
+               (objeto.Name.find('ExtrFrontal18Turbo') > -1) or
+               (objeto.Name.find('ExtrLateral18Turbo') > -1)):
+               numeroCoincidencias = numeroCoincidencias +1
+               encontradoCoincidencia = True
+       if encontradoCoincidencia:
+           cadenaAdicional = cadenaAdicional + str(numeroCoincidencias)
+
+       if (self.vistasActivas >= 2):
+           if self.planta:
+               # Sketch en Z (Planta XY)
+               App.ActiveDocument.addObject('Part::Extrusion','ExtrPlanta18Turbo' + cadenaAdicional)
+               planta = App.ActiveDocument.getObject('ExtrPlanta18Turbo' + cadenaAdicional)
+               objetoPlanta = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)
+               planta.Base = App.ActiveDocument.getObject(objetoPlanta[0].Name)
+               planta.DirMode = "Custom"
+               planta.Dir = App.Vector(0.000000000000000,0.000000000000000,1.000000000000000)
+               planta.DirLink = None               
+
+               if self.lateral:
+                   maximoLZ = App.ActiveDocument.getObjectsByLabel(self.nombreLateral)[0].Shape.BoundBox.ZMax
+                   minimoLZ = App.ActiveDocument.getObjectsByLabel(self.nombreLateral)[0].Shape.BoundBox.ZMin
+                   if abs(maximoLZ) > abs(minimoLZ):
+                       planta.LengthFwd = abs(maximoLZ) *2
+                   else:
+                       planta.LengthFwd = abs(minimoLZ) *2
+               else:
+                   maximoFZ = App.ActiveDocument.getObjectsByLabel(self.nombreFrontal)[0].Shape.BoundBox.ZMax
+                   minimoFZ = App.ActiveDocument.getObjectsByLabel(self.nombreFrontal)[0].Shape.BoundBox.ZMin
+                   if abs(maximoFZ) > abs(minimoFZ):
+                       planta.LengthFwd = abs(maximoFZ) *2
+                   else:
+                       planta.LengthFwd = abs(minimoFZ) *2
+               planta.LengthRev = 0.000000000000000
+               planta.Solid = True
+               planta.Reversed = False
+               planta.Symmetric = True
+               planta.TaperAngle = 0.000000000000000
+               planta.TaperAngleRev = 0.000000000000000
+
+           if self.frontal:
+               # Sketch en Y (Frontal XZ)
+               App.ActiveDocument.addObject('Part::Extrusion','ExtrFrontal18Turbo' + cadenaAdicional)
+               frontal = App.ActiveDocument.getObject('ExtrFrontal18Turbo' + cadenaAdicional)
+               objetoFrontal = App.ActiveDocument.getObjectsByLabel(self.nombreFrontal)
+               frontal.Base = App.ActiveDocument.getObject(objetoFrontal[0].Name)
+               frontal.DirMode = "Custom"
+               frontal.Dir = App.Vector(0.000000000000000, 1.000000000000000, 0.000000000000000)
+               frontal.DirLink = None
+               if self.lateral:
+                   maximoLY = App.ActiveDocument.getObjectsByLabel(self.nombreLateral)[0].Shape.BoundBox.YMax
+                   minimoLY = App.ActiveDocument.getObjectsByLabel(self.nombreLateral)[0].Shape.BoundBox.YMin
+                   if abs(maximoLY) > abs(minimoLY):
+                       frontal.LengthFwd = abs(maximoLY) *2
+                   else:
+                       frontal.LengthFwd = abs(minimoLY) *2
+               else:
+                   maximoPY = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0].Shape.BoundBox.YMax
+                   minimoPY = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0].Shape.BoundBox.YMin
+                   if abs(maximoPY) > abs(minimoPY):
+                       frontal.LengthFwd = abs(maximoPY) *2
+                   else:
+                       frontal.LengthFwd = abs(minimoPY) *2
+               frontal.LengthRev = 0.000000000000000
+               frontal.Solid = True
+               frontal.Reversed = False
+               frontal.Symmetric = True
+               frontal.TaperAngle = 0.000000000000000
+               frontal.TaperAngleRev = 0.000000000000000
+
+           if self.lateral:
+               # Sketch en X (Lateral YZ)
+               App.ActiveDocument.addObject('Part::Extrusion','ExtrLateral18Turbo' + cadenaAdicional)
+               lateral = App.ActiveDocument.getObject('ExtrLateral18Turbo' + cadenaAdicional)
+               objetoLateral = App.ActiveDocument.getObjectsByLabel(self.nombreLateral)
+               lateral.Base = App.ActiveDocument.getObject(objetoLateral[0].Name)
+               lateral.DirMode = "Custom"
+               lateral.Dir = App.Vector(1.000000000000000, 0.000000000000000, 0.000000000000000)
+               lateral.DirLink = None
+               if self.planta:
+                   maximoPX = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0].Shape.BoundBox.XMax
+                   minimoPX = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0].Shape.BoundBox.XMin
+                   if abs(maximoPX) > abs(minimoPX):
+                       lateral.LengthFwd = abs(maximoPX) *2
+                   else:
+                       lateral.LengthFwd = abs(minimoPX) *2
+               else:
+                   maximoFX = App.ActiveDocument.getObjectsByLabel(self.nombreFrontal)[0].Shape.BoundBox.XMax
+                   minimoFX = App.ActiveDocument.getObjectsByLabel(self.nombreFrontal)[0].Shape.BoundBox.XMin
+                   if abs(maximoFX) > abs(minimoFX):
+                       lateral.LengthFwd = abs(maximoFX) *2
+                   else:
+                       lateral.LengthFwd = abs(minimoFX) *2
+
+               lateral.LengthRev = 0.000000000000000
+               lateral.Solid = True
+               lateral.Reversed = False
+               lateral.Symmetric = True
+               lateral.TaperAngle = 0.000000000000000
+               lateral.TaperAngleRev = 0.000000000000000
+
+           nombreInterseccion = "Common" + cadenaAdicional
+
+           if (self.vistasActivas == 3):
+               App.activeDocument().addObject("Part::MultiCommon",nombreInterseccion)
+               App.ActiveDocument.getObject(nombreInterseccion).Shapes = [planta,frontal,lateral,]
+           else:
+               App.activeDocument().addObject("Part::MultiCommon",nombreInterseccion)
+               if (self.planta) and (self.frontal):
+                   App.ActiveDocument.getObject(nombreInterseccion).Shapes = [planta,frontal,]
+               if (self.planta) and (self.lateral):
+                   App.ActiveDocument.getObject(nombreInterseccion).Shapes = [planta,lateral,]
+               if (self.frontal) and (self.lateral):
+                   App.ActiveDocument.getObject(nombreInterseccion).Shapes = [frontal,lateral]
+           App.ActiveDocument.recompute()
+       FreeCADGui.Control.closeDialog()
+        
+panel = BoxTaskPanel()
+FreeCADGui.Control.showDialog(panel)
