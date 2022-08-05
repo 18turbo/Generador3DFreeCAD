@@ -7,13 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>489</width>
-    <height>798</height>
+    <height>751</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="19" column="1">
+    <widget class="QRadioButton" name="radioInterseccion">
+     <property name="text">
+      <string>Unión por Intersección</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0" colspan="2">
     <widget class="QLabel" name="label_2">
      <property name="lineWidth">
@@ -33,49 +46,31 @@
      </property>
     </widget>
    </item>
-   <item row="27" column="0" colspan="2">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string>Cree un boceto (sketch) para cada vista con la que desee generar un sólido 3D. Necesitará al menos 2 bocetos. Luego pinche en el icono del script y seleccione un boceto para cada vista. Luego pulse OK para generar el sólido.</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-     <property name="margin">
-      <number>5</number>
-     </property>
-     <property name="indent">
-      <number>-1</number>
+   <item row="5" column="1">
+    <widget class="QDoubleSpinBox" name="tolerancia">
+     <property name="value">
+      <double>0.010000000000000</double>
      </property>
     </widget>
    </item>
-   <item row="20" column="0">
-    <widget class="QCheckBox" name="checkBoxPlantaS">
-     <property name="text">
-      <string>Vista Lateral con salientes</string>
-     </property>
-     <property name="checkable">
-      <bool>false</bool>
+   <item row="4" column="0" colspan="2">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="25" column="1">
-    <widget class="QLabel" name="label">
+   <item row="31" column="0">
+    <widget class="QLabel" name="label_11">
      <property name="text">
-      <string>Versión 0.0.11 BETA</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      <string>Documentación:</string>
      </property>
     </widget>
    </item>
-   <item row="19" column="0">
-    <widget class="QCheckBox" name="checkBoxFrontalS">
+   <item row="32" column="0" colspan="2">
+    <widget class="QLabel" name="label_12">
      <property name="text">
-      <string>Vista Frontal con salientes</string>
-     </property>
-     <property name="checkable">
-      <bool>false</bool>
+      <string>https://github.com/18turbo/Generador3DFreeCAD/wiki</string>
      </property>
     </widget>
    </item>
@@ -136,17 +131,50 @@
      </widget>
     </widget>
    </item>
-   <item row="24" column="0" colspan="2">
-    <widget class="Line" name="line_5">
+   <item row="21" column="0">
+    <widget class="QCheckBox" name="checkBoxLateralS">
+     <property name="text">
+      <string>Vista Planta con salientes</string>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="20" column="0">
+    <widget class="QCheckBox" name="checkBoxPlantaS">
+     <property name="text">
+      <string>Vista Lateral con salientes</string>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="17" column="0" colspan="2">
+    <widget class="Line" name="line_6">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="18" column="0" colspan="2">
-    <widget class="QLabel" name="label_4">
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_10">
      <property name="text">
-      <string>Tipo de Generador 3D (DISPONIBLE EN FUTURAS VERSIONES):</string>
+      <string>Tolerancia 3D (en mm.):</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="margin">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="24" column="0" colspan="2">
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -157,13 +185,10 @@
      </property>
     </widget>
    </item>
-   <item row="20" column="1">
-    <widget class="QRadioButton" name="radioFusion">
+   <item row="29" column="0" colspan="2">
+    <widget class="QLabel" name="label_7">
      <property name="text">
-      <string>Unión por Fusión</string>
-     </property>
-     <property name="checkable">
-      <bool>false</bool>
+      <string>https://github.com/18turbo/Generador3DFreeCAD/</string>
      </property>
     </widget>
    </item>
@@ -180,69 +205,71 @@
      </property>
     </spacer>
    </item>
-   <item row="17" column="0" colspan="2">
-    <widget class="Line" name="line_6">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="18" column="0" colspan="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Tipo de Generador 3D (DISPONIBLE EN FUTURAS VERSIONES):</string>
      </property>
     </widget>
    </item>
-   <item row="29" column="0" colspan="2">
-    <widget class="QLabel" name="label_7">
+   <item row="25" column="1">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>https://github.com/18turbo/Generador3DFreeCAD/</string>
+      <string>Versión 0.0.11 BETA</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="21" column="0">
-    <widget class="QCheckBox" name="checkBoxLateralS">
+   <item row="19" column="0">
+    <widget class="QCheckBox" name="checkBoxFrontalS">
      <property name="text">
-      <string>Vista Planta con salientes</string>
+      <string>Vista Frontal con salientes</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="19" column="1">
-    <widget class="QRadioButton" name="radioInterseccion">
+   <item row="20" column="1">
+    <widget class="QRadioButton" name="radioFusion">
      <property name="text">
-      <string>Unión por Intersección</string>
+      <string>Unión por Fusión</string>
      </property>
      <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_10">
+   <item row="27" column="0" colspan="2">
+    <widget class="QLabel" name="label_9">
      <property name="text">
-      <string>Tolerancia:</string>
+      <string>Cree un boceto (sketch) para cada vista con la que desee generar un sólido 3D. Necesitará al menos 2 bocetos. Luego pinche en el icono del script y seleccione un boceto para cada vista. Luego pulse OK para generar el sólido.</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
      <property name="margin">
-      <number>10</number>
+      <number>5</number>
+     </property>
+     <property name="indent">
+      <number>-1</number>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QDoubleSpinBox" name="tolerancia">
-     <property name="value">
-      <double>0.010000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="Line" name="line">
+   <item row="30" column="0">
+    <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
-    </widget>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
