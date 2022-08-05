@@ -81,7 +81,6 @@ class BoxTaskPanel:
            self.vistasActivas = self.vistasActivas + 1
 
    def accept(self):
-
        #Comprobar que no existe ya una extrusión con este nombre
        numeroCoincidencias = 0
        encontradoCoincidencia = False
@@ -111,16 +110,16 @@ class BoxTaskPanel:
                    maximoLZ = App.ActiveDocument.getObjectsByLabel(self.nombreLateral)[0].Shape.BoundBox.ZMax
                    minimoLZ = App.ActiveDocument.getObjectsByLabel(self.nombreLateral)[0].Shape.BoundBox.ZMin
                    if abs(maximoLZ) > abs(minimoLZ):
-                       planta.LengthFwd = (abs(maximoLZ) + self.tolerancia.value) *2
+                       planta.LengthFwd = (abs(maximoLZ) + self.form.tolerancia.value()) *2
                    else:
-                       planta.LengthFwd = (abs(minimoLZ) + self.tolerancia.value) *2
+                       planta.LengthFwd = (abs(minimoLZ) + self.form.tolerancia.value()) *2
                else:
                    maximoFZ = App.ActiveDocument.getObjectsByLabel(self.nombreFrontal)[0].Shape.BoundBox.ZMax
                    minimoFZ = App.ActiveDocument.getObjectsByLabel(self.nombreFrontal)[0].Shape.BoundBox.ZMin
                    if abs(maximoFZ) > abs(minimoFZ):
-                       planta.LengthFwd = (abs(maximoFZ) + self.tolerancia.value) *2
+                       planta.LengthFwd = (abs(maximoFZ) + self.form.tolerancia.value()) *2
                    else:
-                       planta.LengthFwd = (abs(minimoFZ) + self.tolerancia.value) *2
+                       planta.LengthFwd = (abs(minimoFZ) + self.form.tolerancia.value()) *2
                planta.LengthRev = 0.000000000000000
                planta.Solid = True
                planta.Reversed = False
@@ -141,16 +140,16 @@ class BoxTaskPanel:
                    maximoLY = App.ActiveDocument.getObjectsByLabel(self.nombreLateral)[0].Shape.BoundBox.YMax
                    minimoLY = App.ActiveDocument.getObjectsByLabel(self.nombreLateral)[0].Shape.BoundBox.YMin
                    if abs(maximoLY) > abs(minimoLY):
-                       frontal.LengthFwd = (abs(maximoLY) + self.tolerancia.value) *2
+                       frontal.LengthFwd = (abs(maximoLY) + self.form.tolerancia.value()) *2
                    else:
-                       frontal.LengthFwd = (abs(minimoLY) + self.tolerancia.value) *2
+                       frontal.LengthFwd = (abs(minimoLY) + self.form.tolerancia.value()) *2
                else:
                    maximoPY = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0].Shape.BoundBox.YMax
                    minimoPY = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0].Shape.BoundBox.YMin
                    if abs(maximoPY) > abs(minimoPY):
-                       frontal.LengthFwd = (abs(maximoPY) + self.tolerancia.value) *2
+                       frontal.LengthFwd = (abs(maximoPY) + self.form.tolerancia.value()) *2
                    else:
-                       frontal.LengthFwd = (abs(minimoPY) + self.tolerancia.value) *2
+                       frontal.LengthFwd = (abs(minimoPY) + self.form.tolerancia.value()) *2
                frontal.LengthRev = 0.000000000000000
                frontal.Solid = True
                frontal.Reversed = False
@@ -171,16 +170,16 @@ class BoxTaskPanel:
                    maximoPX = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0].Shape.BoundBox.XMax
                    minimoPX = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0].Shape.BoundBox.XMin
                    if abs(maximoPX) > abs(minimoPX):
-                       lateral.LengthFwd = (abs(maximoPX) + self.tolerancia.value) *2
+                       lateral.LengthFwd = (abs(maximoPX) + self.form.tolerancia.value()) *2
                    else:
-                       lateral.LengthFwd = (abs(minimoPX) + self.tolerancia.value) *2
+                       lateral.LengthFwd = (abs(minimoPX) + self.form.tolerancia.value()) *2
                else:
                    maximoFX = App.ActiveDocument.getObjectsByLabel(self.nombreFrontal)[0].Shape.BoundBox.XMax
                    minimoFX = App.ActiveDocument.getObjectsByLabel(self.nombreFrontal)[0].Shape.BoundBox.XMin
                    if abs(maximoFX) > abs(minimoFX):
-                       lateral.LengthFwd = (abs(maximoFX) + self.tolerancia.value) *2
+                       lateral.LengthFwd = (abs(maximoFX) + self.form.tolerancia.value()) *2
                    else:
-                       lateral.LengthFwd = (abs(minimoFX) + self.tolerancia.value) *2
+                       lateral.LengthFwd = (abs(minimoFX) + self.form.tolerancia.value()) *2
 
                lateral.LengthRev = 0.000000000000000
                lateral.Solid = True
