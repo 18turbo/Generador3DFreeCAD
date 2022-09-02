@@ -27,5 +27,5 @@ Por el momento, esto es una versión BETA. No usar sin la pertinente copia de se
 
 ## Tutoriales (en español):
 
-[![Lista de reproducción en Youtube]](https://www.youtube.com/watch?v=BJaT2DC7gPE&list=PL1EMxydRwgw9b-WHB-rLqvz3fTtA4LQt9 )
+[[Lista de reproducción en Youtube]](https://www.youtube.com/watch?v=BJaT2DC7gPE&list=PL1EMxydRwgw9b-WHB-rLqvz3fTtA4LQt9 )
 
