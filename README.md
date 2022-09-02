@@ -24,3 +24,8 @@ Por el momento, esto es una versión BETA. No usar sin la pertinente copia de se
 [![Vídeo de Youtube](https://i9.ytimg.com/vi/wODulASYc_s/maxresdefault.jpg?time=1659626400000&sqp=CKDHr5cG&rs=AOn4CLB4iP9ExX4EKld1cP8v3efhnbHfhg)](https://www.youtube.com/watch?v=wODulASYc_s )
 
 [![Vídeo de Youtube](https://i9.ytimg.com/vi/wODulASYc_s/maxresdefault.jpg?time=1659626400000&sqp=CKDHr5cG&rs=AOn4CLB4iP9ExX4EKld1cP8v3efhnbHfhg)](https://youtu.be/-Xknx1jLCm8 )
+
+## Tutoriales (en español):
+
+[![Vídeo de Youtube](https://i9.ytimg.com/vi/wODulASYc_s/maxresdefault.jpg?time=1659626400000&sqp=CKDHr5cG&rs=AOn4CLB4iP9ExX4EKld1cP8v3efhnbHfhg)](https://www.youtube.com/watch?v=BJaT2DC7gPE&list=PL1EMxydRwgw9b-WHB-rLqvz3fTtA4LQt9 )
+
