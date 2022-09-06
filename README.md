@@ -29,3 +29,8 @@ Por el momento, esto es una versión BETA. No usar sin la pertinente copia de se
 
 [[Lista de reproducción en Youtube]](https://www.youtube.com/watch?v=BJaT2DC7gPE&list=PL1EMxydRwgw9b-WHB-rLqvz3fTtA4LQt9 )
 
+## Agradecimientos
+
+* A mi mujer: el pilar básico de mi vida.
+* A Rafael García: por la información y ayuda valiosa para desarrollar el script, además de hacer de betatester en las primeras versiones.
+
