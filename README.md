@@ -4,7 +4,7 @@ Genera en FreeCAD un sólido 3D a partir de 2 o 3 vistas en 2D.
 
 
 Instalación:
-Copia el contenido completo de este script (todos los ficheros) en la carpeta "macros" de tu FreeCAD. Sin la carpeta "generador3D" la macro no funcionará.
+Copia el contenido completo de este script (todos los ficheros) en la carpeta "macros" de tu FreeCAD. Sin la carpeta "g3d" la macro no funcionará.
 Luego crea una macro con el contenido del archivo principal "g3d.FCMacro", y asígnale el icono SVG proporcionado en la carpeta "g3d/icons".
 
 Funcionamiento:
