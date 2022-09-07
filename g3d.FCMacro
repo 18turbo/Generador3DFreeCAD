@@ -15,7 +15,7 @@ __Status__ = 'beta'
 __Requires__ = 'FreeCAD >= v0.20'
 __Contact__ = 'https://github.com/18turbo'
 __Communication__ = 'https://github.com/18turbo/Generador3DFreeCAD/issues'
-__Files__ = 'icons/g3d.svg,ui/g3d15.ui'
+__Files__ = 'g3d/icons/g3d.svg,g3d/ui/g3d15.ui'
 
 
 # (En español:)
@@ -138,8 +138,7 @@ minimoExtrusion = 0.01
 class g3d:
 
     def __init__(self):
-        self.form = FreeCADGui.PySideUic.loadUi(rutaUI)     
-        #self.form.setWindowTitle(translate("g3d","Generador 3D"))
+        self.form = FreeCADGui.PySideUic.loadUi(rutaUI)
         
         lista = []
         self.nombrePlanta = ""
