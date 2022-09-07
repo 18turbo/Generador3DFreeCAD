@@ -5,7 +5,7 @@ Genera en FreeCAD un sólido 3D a partir de 2 o 3 vistas en 2D.
 
 Instalación:
 Copia el contenido completo de este script (todos los ficheros) en la carpeta "macros" de tu FreeCAD. Sin la carpeta "generador3D" la macro no funcionará.
-Luego crea una macro con el contenido del archivo principal "Generador3D_0.0.16_BETA.FCMacro" (el número corresponde a la versión), y asígnale el icono SVG proporcionado.
+Luego crea una macro con el contenido del archivo principal "g3d.FCMacro", y asígnale el icono SVG proporcionado en la carpeta "g3d/icons".
 
 Funcionamiento:
 Crea las vistas adecuadas con bocetos (sketch) para la generación de un objeto 3D. Pueden ser 2 o 3 vistas, que deben corresponderse a la Planta, Alzado y/o Lateral de la pieza. Los salientes no los interpreta por el momento, pero los agujeros sí. Un boceto puede contener varios contornos, siempre y cuando no se crucen o sean vaciados (agujeros).
