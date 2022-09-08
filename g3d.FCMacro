@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # (c) 18Turbo, 2022
 
-__Name__ = 'Generator3D'
+__Name__ = 'Generador3D'
 __Comment__ = 'Create a solid with 2 or 3 sketches (views)'
 __Author__ = '18Turbo'
-__Version__ = '0.0.16'
-__Date__ = '2022-09-02'
+__Version__ = '0.1.0'
+__Date__ = '2022-09-05'
 __License__ = 'LGPL-2.0-or-later'
 __Web__ = 'https://github.com/18turbo/Generador3DFreeCAD'
 __Wiki__ = 'https://github.com/18turbo/Generador3DFreeCAD/wiki'
@@ -15,36 +15,41 @@ __Status__ = 'beta'
 __Requires__ = 'FreeCAD >= v0.20'
 __Contact__ = 'https://github.com/18turbo'
 __Communication__ = 'https://github.com/18turbo/Generador3DFreeCAD/issues'
-__Files__ = 'Generator3D.svg,generator3D/Generator3D15.ui'
+__Files__ = 'g3d/icons/g3d.svg,g3d/ui/g3d15.ui'
 
 
 # (En español:)
-# Funcionalidad:	Genera una pieza 3D a partir de 2 o 3 sketch, cada uno en una vista distinta (planta, frontal o lateral)
+# Funcionalidad:    Genera una pieza 3D a partir de 2 o 3 sketch, cada uno en una vista distinta (planta, frontal o lateral)
 #
 # Descripción:      Una vez ejecutada la macro, habrá que asociar cada sketch a cada vista, y pulsar el botón de OK.
 #
 #
 # Notas de versiones:
-# v.0.0.16:        Corregido errores en la selección de vistas
-#                Evita el error de introducir la longitud menor o igual al offset
-# v.0.0.15:        Cambiada la interfaz
-#                Añadido Offset y Longitud a cada vista
-# v.0.0.14:         Adaptación al Addon Manager
-# v.0.0.13:       Depuración de código
-# v.0.0.12:       Depuración de código
-#                Posibilidad de crear una carpeta automáticamente donde meter las vistas y ocultarlas
-# v.0.0.11:		Incluida tolerancia 3D para evitar problemas en los límites.
-# v.0.0.10:		Corrección de errores en sketch negativos
-# v.0.0.9:		Cambio de interfaz y corrección de errores. Beta funcional.
-# v.0.0.8:		Corrección de errores
-# v.0.0.7:		Corrección de errores
-# v.0.0.6:		Primera versión BETA
-# v.0.0.5 ALFA:	Genera la pieza 3D con 3 vistas
-# v.0.0.4 ALFA:	Arregla la selección en las vistas en la pestaña Task (Tarea)
+# v.0.1.0:      Adaptación del código para varios idiomas
+#               Corrección de error en la deselección de vistas
+#               Cambio de nombres de ficheros
+# v.0.0.16:     Corregido errores en la selección de vistas
+#               Evita el error de introducir la longitud menor o igual al offset
+# v.0.0.15:     Cambiada la interfaz
+#               Añadido Offset y Longitud a cada vista
+# v.0.0.14:     Adaptación al Addon Manager
+# v.0.0.13:     Depuración de código
+# v.0.0.12:     Depuración de código
+#               Posibilidad de crear una carpeta automáticamente donde meter las vistas y ocultarlas
+# v.0.0.11:     Incluida tolerancia 3D para evitar problemas en los límites.
+# v.0.0.10:     Corrección de errores en sketch negativos
+# v.0.0.9:      Cambio de interfaz y corrección de errores. Beta funcional.
+# v.0.0.8:      Corrección de errores
+# v.0.0.7:      Corrección de errores
+# v.0.0.6:      Primera versión BETA
+# v.0.0.5 ALFA: Genera la pieza 3D con 3 vistas
+# v.0.0.4 ALFA: Arregla la selección en las vistas en la pestaña Task (Tarea)
 #
 #
 # BetaTester: Rafael García Rodríguez
 # BetaTester: 18Turbo
+
+# Traducción inglés:    Rocco Vicedomini
  
 
 import FreeCAD,FreeCADGui,Part
@@ -52,29 +57,97 @@ import FreeCAD,FreeCADGui,Part
 from PySide import QtCore, QtGui
 from FreeCAD import Base
 
-import FreeCAD
-translate = FreeCAD.Qt.translate
+
+
+cadenasIdiomas = [
+    [ # Español
+        "Generador 3D",
+        "Seleccione un sketch (boceto) en 2 o 3 vistas:",
+        "Frontal -Alzado- (Front/Rear):",
+        "Marque esta casilla si quiere activar la vista frontal y asígnele un sketch (boceto)",
+        "Lateral -Perfil- (Right/Left):",
+        "Marque esta casilla si quiere activar la vista lateral y asígnele un sketch (boceto)",
+        "Planta -Sup/Inf- (Top/Bott):",
+        "Marque esta casilla si quiere activar la vista en planta y asígnele un sketch (boceto)",
+        "Tol. 3D (mm.):",
+        "Es la distancia en mm. que extruirá de más. No debe influir en el objeto final. Si no desea tolerancia, ponga este valor a 0",
+        "Crear un Grupo (Carpeta) para las vistas (sketches)",
+        "Ocultar las vistas al generar el sólido",
+        "Fusión (interesección)",
+        "Versión:",
+        "Información Breve de Uso:",
+        "Cree un boceto (sketch) para cada vista con la que desee generar un sólido 3D. Necesitará al menos 2 bocetos.",
+        "Luego pinche en el icono del script y seleccione un boceto para cada vista.",
+        "Finalmente, pulse OK para generar el sólido.",
+        "Documentación:",
+        "Offset",
+        "Es la distancia desde la cual empezará la extrusión en el eje Y (desplazamiento en Y)",
+        "Longitud",
+        "Es la distancia total de extrusión frontal (en el eje Y), que siempre será mayor que el Offset Frontal",
+        "Offset",
+        "Es la distancia desde la cual empezará la extrusión en el eje X (desplazamiento en X)",
+        "Longitud",
+        "Es la distancia total de extrusión lateral (en el eje X), que siempre será mayor que el Offset Lateral",
+        "Offset",
+        "Es la distancia desde la cual empezará la extrusión en el eje Z (desplazamiento en Z)",
+        "Longitud",
+        "Es la distancia total de extrusión en planta (en el eje Z), que siempre será mayor que el Offset en Planta",
+        "Pieza3D",
+        "VistasPieza3D"
+    ],
+    [ # English
+        ## Strings for translation into any language (English Strings)
+
+        "3D Generator",
+        "Select a sketch in 2 or 3 views:",
+        "Front/Rear view - (Front/Rear):",
+        "Check this box if you want to activate the front view and assign it a sketch",
+        "Side view - (Right/Left):",
+        "Check this box if you want to activate the side view and assign it a sketch",
+        "Horiz.view - (Top/Bott):",
+        "Check this box if you want to activate the horizontal view and assign it a sketch",
+        "Tol. 3D (mm.):",
+        "Length in mm. This should not influence the final object. If you do not need this tolerance, set this value to 0",
+        "Make a new group (folder) with views (sketches)",
+        "Hide views when generating the solid",
+        "Fusion (intersection)",
+        "Version:",
+        "Brief guide to use the script:",
+        "Create a sketch for each view required to generate your 3D solid. At least two sketches will be required.",
+        "Then click on the script icon and select a sketch for each view.",
+        "Finally, press the OK button to generate the solid.",
+        "Documentation:",
+        "Offset",
+        "Offset from the sketch plane from which the extrusion along the Y axis will start",
+        "Length",
+        "Total length of the frontal extrusion along the Y axis (it must be always larger than the frontal offset)",
+        "Offset",
+        "Offset from the sketch plane from which the extrusion along the X axis will start",
+        "Length",
+        "Total length of the lateral extrusion along the X axis (it must be always larger than the lateral offset)",
+        "Offset",
+        "Offset from the sketch plane from which the extrusion along the Z axis will start",
+        "Length",
+        "Total length of the vertical extrusion along the Z axis (it must be always larger than the vertical offset)",
+        "Pieza3D",
+        "VistasPieza3D"
+    ]
+        ]
+
 
 
 rutaMacro = FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Macro")     
-rutaUI = rutaMacro.GetString("MacroPath","") + "/generador3D/generador3D15.ui"
+rutaUI = rutaMacro.GetString("MacroPath","") + "/g3d/ui/g3d15.ui"
 rutaUI = rutaUI.replace("\\","/")
 
 minimoExtrusion = 0.01
 
 
-class Generador3D:
-    def __init__(self):       
-        #from PySide.QtCore import QT_TRANSLATE_NOOP
-        #from DraftGui import translate
-        #FreeCADGui.addLanguagePath(rutaMacro.GetString("MacroPath","") + "/generador3D/translations")
-        #FreeCADGui.addLanguagePath(os.path.join(os.path.dirname(__file__), "generador3D/translations"))
-        #FreeCADGui.updateLocale()
+class g3d:
 
-        self.form = FreeCADGui.PySideUic.loadUi(rutaUI)        
-
-        self.form.setWindowTitle(translate("Generador3D","Generador 3D"))
-
+    def __init__(self):
+        self.form = FreeCADGui.PySideUic.loadUi(rutaUI)
+        
         lista = []
         self.nombrePlanta = ""
         self.nombreFrontal = ""
@@ -104,6 +177,62 @@ class Generador3D:
         self.form.etFrontal.clicked.connect(self.cambiaCheckedFrontal)
         self.form.etLateral.clicked.connect(self.cambiaCheckedLateral)
         self.form.etPlanta.clicked.connect(self.cambiaCheckedPlanta)
+
+        self.inicializarCadenas()
+
+    def inicializarCadenas(self):
+        traducir = self.traducir
+        self.form.setWindowTitle(__Name__ + " " + titulo)
+        self.form.etInfo.setText(traducir(idioma,"Seleccione un sketch (boceto) en 2 o 3 vistas:"))
+        self.form.etFrontal.setTitle(traducir(idioma,"Frontal -Alzado- (Front/Rear):"))
+        self.form.etFrontal.setToolTip(traducir(idioma,"Marque esta casilla si quiere activar la vista frontal y asígnele un sketch (boceto)"))
+        self.form.etLateral.setTitle(traducir(idioma,"Lateral -Perfil- (Right/Left):"))
+        self.form.etLateral.setToolTip(traducir(idioma,"Marque esta casilla si quiere activar la vista lateral y asígnele un sketch (boceto)"))
+        self.form.etPlanta.setTitle(traducir(idioma,"Planta -Sup/Inf- (Top/Bott):"))
+        self.form.etPlanta.setToolTip(traducir(idioma,"Marque esta casilla si quiere activar la vista en planta y asígnele un sketch (boceto)"))
+        self.form.etTolerancia.setText(traducir(idioma,"Tol. 3D (mm.):"))
+        self.form.etTolerancia.setToolTip(traducir(idioma,"Es la distancia en mm. que extruirá de más. No debe influir en el objeto final. Si no desea tolerancia, ponga este valor a 0"))
+        self.form.meterVistasCarpeta.setText(traducir(idioma,"Crear un Grupo (Carpeta) para las vistas (sketches)"))
+        self.form.ocultarVistas.setText(traducir(idioma,"Ocultar las vistas al generar el sólido"))
+        self.form.radioInterseccion.setText(traducir(idioma,"Fusión (interesección)"))
+        self.form.etVersion.setText(traducir(idioma,"Versión:"))
+        self.form.etNumVersion.setText(__Version__ + " " + __Status__)
+        self.form.etInfoUso.setText(traducir(idioma,"Información Breve de Uso:"))
+        descripcionInfoUso = (traducir(idioma,"Cree un boceto (sketch) para cada vista con la que desee generar un sólido 3D. Necesitará al menos 2 bocetos.")
+                + " " + traducir(idioma,"Luego pinche en el icono del script y seleccione un boceto para cada vista.")
+                + " " + traducir(idioma,"Finalmente, pulse OK para generar el sólido."))
+        self.form.descInfoUso.setText(descripcionInfoUso)
+        self.form.etDoc.setText(traducir(idioma,"Documentación:"))
+        self.form.etOffsetF.setText(traducir(idioma,"Offset"))
+        self.form.etOffsetF.setToolTip(traducir(idioma,"Es la distancia desde la cual empezará la extrusión en el eje Y (desplazamiento en Y)"))
+        self.form.offsetF.setToolTip(traducir(idioma,"Es la distancia desde la cual empezará la extrusión en el eje Y (desplazamiento en Y)"))
+        self.form.etOffsetL.setText(traducir(idioma,"Offset"))
+        self.form.etOffsetL.setToolTip(traducir(idioma,"Es la distancia desde la cual empezará la extrusión en el eje X (desplazamiento en X)"))
+        self.form.offsetL.setToolTip(traducir(idioma,"Es la distancia desde la cual empezará la extrusión en el eje X (desplazamiento en X)"))
+        self.form.etOffsetP.setText(traducir(idioma,"Offset"))
+        self.form.etOffsetP.setToolTip(traducir(idioma,"Es la distancia desde la cual empezará la extrusión en el eje Z (desplazamiento en Z)"))
+        self.form.offsetP.setToolTip(traducir(idioma,"Es la distancia desde la cual empezará la extrusión en el eje Z (desplazamiento en Z)"))
+        self.form.etLongitudF.setText(traducir(idioma,"Longitud"))
+        self.form.etLongitudF.setToolTip(traducir(idioma,"Es la distancia total de extrusión frontal (en el eje Y), que siempre será mayor que el Offset Frontal"))
+        self.form.longF.setToolTip(traducir(idioma,"Es la distancia total de extrusión frontal (en el eje Y), que siempre será mayor que el Offset Frontal"))
+        self.form.etLongitudL.setText(traducir(idioma,"Longitud"))
+        self.form.etLongitudL.setToolTip(traducir(idioma,"Es la distancia total de extrusión lateral (en el eje X), que siempre será mayor que el Offset Lateral"))
+        self.form.longL.setToolTip(traducir(idioma,"Es la distancia total de extrusión lateral (en el eje X), que siempre será mayor que el Offset Lateral"))
+        self.form.etLongitudP.setText(traducir(idioma,"Longitud"))
+        self.form.etLongitudP.setToolTip(traducir(idioma,"Es la distancia total de extrusión en planta (en el eje Z), que siempre será mayor que el Offset en Planta"))
+        self.form.longP.setToolTip(traducir(idioma,"Es la distancia total de extrusión en planta (en el eje Z), que siempre será mayor que el Offset en Planta"))
+
+
+    def traducir(self,idi,cad):
+        if (idi == 0):
+            return cad
+        else:
+            primerIdioma = cadenasIdiomas [0]
+            indice = primerIdioma.index(cad)
+            if indice > -1:
+                return cadenasIdiomas [idi] [indice]
+            else:
+                return cad
 
     def cambiaValorFrontal(self):
         self.form.longF.setMinimum(self.form.offsetF.value() + minimoExtrusion)
@@ -136,17 +265,10 @@ class Generador3D:
 
     def cambiaSeleccionFrontal(self):
         self.nombreFrontal = str(self.form.listWidgetFrontal.selectedItems()[0].text())
-        
     def cambiaSeleccionLateral(self):
         self.nombreLateral = str(self.form.listWidgetLateral.selectedItems()[0].text())
-        if not (self.lateral):
-            self.lateral = True
-            self.vistasActivas = self.vistasActivas + 1
     def cambiaSeleccionPlanta(self):
         self.nombrePlanta = str(self.form.listWidgetPlanta.selectedItems()[0].text())
-        if not (self.planta):
-            self.planta = True
-            self.vistasActivas = self.vistasActivas + 1
 
     def extrusion(self,nombreExtrusion,nombreEnVista,vista):
         App.ActiveDocument.addObject('Part::Extrusion',nombreExtrusion)
@@ -260,7 +382,7 @@ class Generador3D:
                 lateral = self.extrusion("ExtrLateral18Turbo" + cadenaAdicional,self.nombreLateral,"lateral")
 
             # Intersección
-            nombreInterseccion = "Pieza3D" + cadenaAdicional
+            nombreInterseccion = traducir(idioma,"Pieza3D") + cadenaAdicional
             if (self.vistasActivas == 3):
                 App.activeDocument().addObject("Part::MultiCommon",nombreInterseccion)
                 App.ActiveDocument.getObject(nombreInterseccion).Shapes = [planta,frontal,lateral,]
@@ -271,12 +393,12 @@ class Generador3D:
                 if (self.planta) and (self.lateral):
                    App.ActiveDocument.getObject(nombreInterseccion).Shapes = [planta,lateral,]
                 if (self.frontal) and (self.lateral):
-                   App.ActiveDocument.getObject(nombreInterseccion).Shapes = [frontal,lateral]
+                   App.ActiveDocument.getObject(nombreInterseccion).Shapes = [frontal,lateral,]
             App.ActiveDocument.recompute()
 
             #Meter vistas en Grupo (Carpeta)
             if self.form.meterVistasCarpeta.checkState():
-                nombreGrupoVistas = 'VistasPieza3D' + cadenaAdicional
+                nombreGrupoVistas = traducir(idioma,"VistasPieza3D") + cadenaAdicional
                 App.activeDocument().Tip = App.activeDocument().addObject('App::DocumentObjectGroup',nombreGrupoVistas)
                 if (self.planta):
                     objetoPlanta = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0]
@@ -298,6 +420,20 @@ class Generador3D:
 
         FreeCADGui.Control.closeDialog()
  
-objetos = FreeCAD.ActiveDocument.Objects       
-panel = Generador3D()
+
+
+objetos = FreeCAD.ActiveDocument.Objects
+# Se define el idioma con variable global
+nombreIdioma = App.Gui.getLocale()
+if nombreIdioma.find("English") > -1:
+    idioma = 1
+elif nombreIdioma.find("Spanish") > -1:
+    idioma = 0
+else:
+    idioma = 0
+if idioma != 0:
+    titulo = "(" + cadenasIdiomas [idioma][0] + ")"
+else:
+    titulo = ""      
+panel = g3d()
 FreeCADGui.Control.showDialog(panel)

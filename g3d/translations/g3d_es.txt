@@ -31,3 +31,5 @@
 "Es la distancia desde la cual empezará la extrusión en el eje Z (desplazamiento en Z)",
 "Longitud PL",
 "Es la distancia total de extrusión en planta (en el eje Z), que siempre será mayor que el Offset en Planta"
+"Pieza3D",
+"VistasPieza3D"

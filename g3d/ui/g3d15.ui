@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>18Turbo</author>
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
   <property name="geometry">
@@ -7,19 +8,19 @@
     <x>0</x>
     <y>0</y>
     <width>495</width>
-    <height>840</height>
+    <height>874</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>809</height>
+    <height>870</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Generador 3D</string>
   </property>
-  <widget class="QLabel" name="label_11">
+  <widget class="QLabel" name="etDoc">
    <property name="geometry">
     <rect>
      <x>9</x>
@@ -93,7 +94,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="etInfo">
    <property name="geometry">
     <rect>
      <x>9</x>
@@ -131,12 +132,12 @@
     <string>https://github.com/18turbo/Generador3DFreeCAD/</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_8">
+  <widget class="QLabel" name="etInfoUso">
    <property name="geometry">
     <rect>
      <x>9</x>
      <y>667</y>
-     <width>217</width>
+     <width>271</width>
      <height>17</height>
     </rect>
    </property>
@@ -144,7 +145,7 @@
     <string>(SPANISH) - Información de Uso:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_10">
+  <widget class="QLabel" name="etTolerancia">
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -163,7 +164,7 @@
     <number>10</number>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="etNumVersion">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -173,7 +174,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>0.0.16 BETA</string>
+    <string>0.1.0 BETA</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -205,7 +206,7 @@
     <string>https://github.com/18turbo/Generador3DFreeCAD/wiki</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_9">
+  <widget class="QLabel" name="descInfoUso">
    <property name="geometry">
     <rect>
      <x>9</x>
@@ -248,7 +249,7 @@
    <widget class="QDoubleSpinBox" name="longF">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>100</x>
       <y>180</y>
       <width>70</width>
       <height>25</height>
@@ -278,25 +279,28 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="etOffsetF">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>160</y>
-      <width>66</width>
+      <width>71</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Es la distincia que desde la cual empezará la extrusión en el eje Y</string>
     </property>
     <property name="text">
      <string>Offset</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="etLongitudF">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>100</x>
       <y>160</y>
-      <width>66</width>
+      <width>81</width>
       <height>17</height>
      </rect>
     </property>
@@ -346,7 +350,7 @@
    <widget class="QDoubleSpinBox" name="longL">
     <property name="geometry">
      <rect>
-      <x>91</x>
+      <x>100</x>
       <y>180</y>
       <width>70</width>
       <height>25</height>
@@ -356,12 +360,12 @@
      <double>100000000.000000000000000</double>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="etLongitudL">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>99</x>
       <y>160</y>
-      <width>66</width>
+      <width>81</width>
       <height>17</height>
      </rect>
     </property>
@@ -369,14 +373,17 @@
      <string>Longitud</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="etOffsetL">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>160</y>
-      <width>66</width>
+      <width>71</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Es la distincia que desde la cual empezará la extrusión en el eje X</string>
     </property>
     <property name="text">
      <string>Offset</string>
@@ -404,7 +411,7 @@
    <widget class="QDoubleSpinBox" name="longP">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>100</x>
       <y>180</y>
       <width>70</width>
       <height>25</height>
@@ -446,12 +453,12 @@
      <enum>QAbstractItemView::SingleSelection</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_13">
+   <widget class="QLabel" name="etLongitudP">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>100</x>
       <y>160</y>
-      <width>66</width>
+      <width>81</width>
       <height>17</height>
      </rect>
     </property>
@@ -459,21 +466,24 @@
      <string>Longitud</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_14">
+   <widget class="QLabel" name="etOffsetP">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>160</y>
-      <width>66</width>
+      <width>71</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Es la distincia que desde la cual empezará la extrusión en el eje Z</string>
     </property>
     <property name="text">
      <string>Offset</string>
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="label_15">
+  <widget class="QLabel" name="etVersion">
    <property name="geometry">
     <rect>
      <x>210</x>
