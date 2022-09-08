@@ -5,7 +5,7 @@ __Name__ = 'Generador3D'
 __Comment__ = 'Create a solid with 2 or 3 sketches (views)'
 __Author__ = '18Turbo'
 __Version__ = '0.1.0'
-__Date__ = '2022-09-08'
+__Date__ = '2022-09-05'
 __License__ = 'LGPL-2.0-or-later'
 __Web__ = 'https://github.com/18turbo/Generador3DFreeCAD'
 __Wiki__ = 'https://github.com/18turbo/Generador3DFreeCAD/wiki'
@@ -100,12 +100,12 @@ cadenasIdiomas = [
 
         "3D Generator",
         "Select a sketch in 2 or 3 views:",
-        "Front/Rear view - (Front/Rear):",
+        "Front view - (Front/Rear):",
         "Check this box if you want to activate the front view and assign it a sketch",
         "Side view - (Right/Left):",
         "Check this box if you want to activate the side view and assign it a sketch",
-        "Horiz.view - (Top/Bott):",
-        "Check this box if you want to activate the horizontal view and assign it a sketch",
+        "Plan view - (Top/Bott):",
+        "Check this box if you want to activate the plan view and assign it a sketch",
         "Tol. 3D (mm.):",
         "Length in mm. This should not influence the final object. If you do not need this tolerance, set this value to 0",
         "Make a new group (folder) with views (sketches)",
@@ -129,8 +129,8 @@ cadenasIdiomas = [
         "Offset from the sketch plane from which the extrusion along the Z axis will start",
         "Length",
         "Total length of the vertical extrusion along the Z axis (it must be always larger than the vertical offset)",
-        "Pieza3D",
-        "VistasPieza3D"
+        "3D-Part",
+        "3D-Part_Views"
     ]
         ]
 
@@ -178,6 +178,7 @@ class g3d:
         self.form.etLateral.clicked.connect(self.cambiaCheckedLateral)
         self.form.etPlanta.clicked.connect(self.cambiaCheckedPlanta)
 
+        
         self.inicializarCadenas()
 
     def inicializarCadenas(self):
@@ -382,7 +383,7 @@ class g3d:
                 lateral = self.extrusion("ExtrLateral18Turbo" + cadenaAdicional,self.nombreLateral,"lateral")
 
             # Intersección
-            nombreInterseccion = traducir(idioma,"Pieza3D") + cadenaAdicional
+            nombreInterseccion = self.traducir(idioma,"Pieza3D") + cadenaAdicional
             if (self.vistasActivas == 3):
                 App.activeDocument().addObject("Part::MultiCommon",nombreInterseccion)
                 App.ActiveDocument.getObject(nombreInterseccion).Shapes = [planta,frontal,lateral,]
@@ -398,7 +399,7 @@ class g3d:
 
             #Meter vistas en Grupo (Carpeta)
             if self.form.meterVistasCarpeta.checkState():
-                nombreGrupoVistas = traducir(idioma,"VistasPieza3D") + cadenaAdicional
+                nombreGrupoVistas = self.traducir(idioma,"VistasPieza3D") + cadenaAdicional
                 App.activeDocument().Tip = App.activeDocument().addObject('App::DocumentObjectGroup',nombreGrupoVistas)
                 if (self.planta):
                     objetoPlanta = App.ActiveDocument.getObjectsByLabel(self.nombrePlanta)[0]
