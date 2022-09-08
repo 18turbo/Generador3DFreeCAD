@@ -36,5 +36,5 @@ Por el momento, esto es una versión BETA y, aunque no parece dar problemas, es 
 
 * A mi mujer: el pilar básico de mi vida.
 * A Rafael García: por la información y ayuda valiosa para desarrollar el script, además de hacer de betatester en las primeras versiones.
-* A Rocco Vicedomini: por la traducción al inglés
+* A Rocco Vicedomini: por la traducción al inglés e italiano.
 
