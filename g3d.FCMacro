@@ -147,19 +147,6 @@ class g3d:
 
     def __init__(self):
         self.form = FreeCADGui.PySideUic.loadUi(rutaUI)
-
-        # Se define el idioma con variable global
-        nombreIdioma = App.Gui.getLocale()
-        if nombreIdioma.find("English") > -1:
-            idioma = 1
-        elif nombreIdioma.find("Spanish") > -1:
-            idioma = 0
-        else:
-            idioma = 0
-        if idioma != 0:
-            titulo = "(" + cadenasIdiomas [idioma][0] + ")"
-        else:
-            titulo = ""
         
         lista = []
         self.nombrePlanta = ""
@@ -195,7 +182,7 @@ class g3d:
 
     def inicializarCadenas(self):
         traducir = self.traducir
-        self.form.setWindowTitle(__Name__ + titulo)
+        self.form.setWindowTitle(__Name__ + " " + titulo)
         self.form.etInfo.setText(traducir(idioma,"Seleccione un sketch (boceto) en 2 o 3 vistas:"))
         self.form.etFrontal.setTitle(traducir(idioma,"Frontal -Alzado- (Front/Rear):"))
         self.form.etFrontal.setToolTip(traducir(idioma,"Marque esta casilla si quiere activar la vista frontal y asígnele un sketch (boceto)"))
@@ -433,6 +420,20 @@ class g3d:
 
         FreeCADGui.Control.closeDialog()
  
-objetos = FreeCAD.ActiveDocument.Objects       
+
+
+objetos = FreeCAD.ActiveDocument.Objects
+# Se define el idioma con variable global
+nombreIdioma = App.Gui.getLocale()
+if nombreIdioma.find("English") > -1:
+    idioma = 1
+elif nombreIdioma.find("Spanish") > -1:
+    idioma = 0
+else:
+    idioma = 0
+if idioma != 0:
+    titulo = "(" + cadenasIdiomas [idioma][0] + ")"
+else:
+    titulo = ""      
 panel = g3d()
 FreeCADGui.Control.showDialog(panel)
