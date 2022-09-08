@@ -31,3 +31,5 @@
         "Offset from the sketch plane from which the extrusion along the Z axis will start",
         "Length",
         "Total length of the vertical extrusion along the Z axis (it must be always larger than the vertical offset)"
+        "Pieza3D",
+        "VistasPieza3D"
