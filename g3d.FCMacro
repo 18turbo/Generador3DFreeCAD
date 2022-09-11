@@ -49,7 +49,7 @@ __Files__ = 'g3d/icons/g3d.svg,g3d/ui/g3d15.ui'
 # BetaTester: Rafael García Rodríguez
 # BetaTester: 18Turbo
 
-# Traducción inglés:    Rocco Vicedomini
+# Traducción inglés e italiano:    Rocco Vicedomini
  
 
 import FreeCAD,FreeCADGui,Part
