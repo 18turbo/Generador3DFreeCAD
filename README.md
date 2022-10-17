@@ -1,6 +1,8 @@
 # Generador3DFreeCAD
 Genera en FreeCAD un sólido 3D a partir de 2 o 3 vistas en 2D.
 
+IMPORTANTE: Ya se puede descargar la el G3D desde el administrador de complementos de FreeCAD.
+
 # Versión 0.1.0
 
 ## Instalación:
